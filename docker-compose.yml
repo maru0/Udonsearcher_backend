@@ -1,9 +1,26 @@
 version: '3' # composeファイルのバーション指定
 services:
   app: # service名
-    build: . # ビルドに使用するDockerfileがあるディレクトリ指定
+    build: Docker/app/ # ビルドに使用するDockerfileがあるディレクトリ指定
     command: go run main.go
+    env_file: .env
     ports:
-      - "8080:8080"
+      - ${APP_PORT}
     volumes:
       - .:/go/src/work # マウントディレクトリ指定
+    depends_on:
+      - db
+  db: # データベース
+    build: Docker/db/ # Dockerfileは変更が必要
+    ports:
+      - ${DB_PORT}
+    volumes:
+      # ここに永続化を書く
+      - "./Docker/db/data:/var/lib/postgresql/data"
+      #- "./Docker/db/sql:/docker-entrypoint-initdb.d"
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TZ: ${TZ}

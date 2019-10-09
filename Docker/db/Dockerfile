@@ -1,6 +1,6 @@
 # ベースとなるDockerイメージ指定
-FROM postgres:9.6
-
+FROM mongo:4.0
+# mongoに変更d
 RUN apt update && apt install -y locales \
     && rm -rf /var/lib/apt/lists/* \
     && echo "ja_JP.UTF-8 UTF-8" > /etc/locale.gen \

@@ -11,16 +11,16 @@ services:
     depends_on:
       - db
   db: # データベース
-    build: Docker/db/ # Dockerfileは変更が必要
+    build: Docker/db/
     ports:
       - ${DB_PORT}
     volumes:
       # ここに永続化を書く
-      - "./Docker/db/data:/var/lib/postgresql/data"
+      - "./Docker/db/data:/data/db"
       #- "./Docker/db/sql:/docker-entrypoint-initdb.d"
     env_file: .env
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
       TZ: ${TZ}

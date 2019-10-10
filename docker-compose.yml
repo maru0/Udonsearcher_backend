@@ -17,6 +17,7 @@ services:
     volumes:
       # ここに永続化を書く
       - "./Docker/db/data:/data/db"
+      - ./mongo/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       #- "./Docker/db/sql:/docker-entrypoint-initdb.d"
     env_file: .env
     environment:
@@ -24,3 +25,4 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
       MONGO_INITDB_DATABASE: ${DB_NAME}
       TZ: ${TZ}
+      command: mongod --auth

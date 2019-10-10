@@ -1,5 +1,5 @@
 # ベースとなるDockerイメージ指定
-FROM mongo:4.0
+FROM mongo:latest
 # mongoに変更d
 RUN apt update && apt install -y locales \
     && rm -rf /var/lib/apt/lists/* \
